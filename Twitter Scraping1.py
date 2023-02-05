@@ -8,6 +8,7 @@ import pandas as pd
 import streamlit as st
 from datetime import datetime, timedelta
 
+
 st.title('Twitter Scrapping By :blue[Sakthinathan]')
 search_term = st.text_input("Enter a keyword or hashtag to search for:")
 tweet_limit = st.number_input("Enter the maximum number of tweets to retrieve:")
@@ -17,10 +18,10 @@ end_date = st.date_input("Enter the end date for the tweets (YYYY-MM-DD):")
 tweets_column_list1 = []
 
 def tweet():
+    
+    search = (f'{search_term} since:{start_date} until:{end_date}')
 
-
-
-    for i,tweet in enumerate(twitter.TwitterSearchScraper("from:{search_term}").get_items()):
+    for i,tweet in enumerate(twitter.TwitterSearchScraper(search).get_items()):
                             
     
         if i>tweet_limit: #number of tweets you want to scrape
@@ -30,7 +31,7 @@ def tweet():
     # Creating a dataframe from the tweets list above 
     tweets_df1 = pd.DataFrame(tweets_column_list1, columns=['Datetime', 'Tweet Id','URL', 'Content', 'Username','replyCount','retweetCount','language','likeCount','source'])
     
-    print(tweets_df1)
+    #print(tweets_df1)
     st.dataframe(tweets_df1)
     return(tweets_df1)
 
